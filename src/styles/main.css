@@ -9,10 +9,11 @@ body {
 }
 
 body {
-  background-color: cornflowerblue;
+  background-color: #000;
 }
 
 #canvas-main {
   width: 100%;
   height: auto;
+  background-color: white;
 }

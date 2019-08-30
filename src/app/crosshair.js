@@ -2,7 +2,9 @@ import { Sprite, track, pointer } from 'kontra';
 import { Base} from './base';
 
 export class CrossHair extends Base {
-  init(props = {}) {
+  constructor(props = {}) {
+    super();
+
     this.sprite = Sprite({
       color: 'blue',
       width: 20,

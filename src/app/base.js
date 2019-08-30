@@ -1,6 +1,4 @@
 export class Base {
-  init() {}
-
   update(dt) {
     this.sprite && this.sprite.update(dt);
   }

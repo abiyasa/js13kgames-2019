@@ -1,25 +1,27 @@
-import { init, GameLoop, Sprite } from 'kontra';
+import { init, initPointer, GameLoop } from 'kontra';
 import { Hero } from './hero';
+import { CrossHair } from './crosshair';
 
 export const GameEngine = {
   init() {
-    const { canvas } = init();
+    init();
+    initPointer();
 
     const hero = new Hero();
-    hero.init({ canvas });
+    hero.init();
+    const crosshair = new CrossHair();
+    crosshair.init();
 
-    this._loop = GameLoop({
+    GameLoop({
       update() {
         hero.update();
+        crosshair.update();
       },
 
       render() {
         hero.render();
+        crosshair.render();
       }
-    });
-  },
-
-  start() {
-    this._loop.start();
+    }).start();
   }
 };

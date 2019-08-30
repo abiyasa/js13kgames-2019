@@ -3,6 +3,7 @@
   "private": true,
   "scripts": {
     "start": "webpack-dev-server --mode development",
+    "prebuild": "rm -rf dist",
     "build": "webpack --mode production",
     "postbuild": "node postbuild.js"
   },

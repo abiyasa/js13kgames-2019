@@ -1,4 +1,4 @@
-import { init, initPointer, GameLoop } from 'kontra';
+import { init, initPointer, initKeys, GameLoop } from 'kontra';
 import { Hero } from './hero';
 import { CrossHair } from './crosshair';
 import { Enemy } from './enemy';
@@ -6,6 +6,7 @@ import { Enemy } from './enemy';
 export const GameEngine = {
   init() {
     init();
+    initKeys();
     initPointer();
 
     const enemies = [

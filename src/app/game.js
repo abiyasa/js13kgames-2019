@@ -1,7 +1,8 @@
-import { init, initPointer, initKeys, GameLoop } from 'kontra';
+import { init, initPointer, initKeys, GameLoop, Pool } from 'kontra';
 import { Hero } from './hero';
 import { CrossHair } from './crosshair';
 import { Enemy } from './enemy';
+import { Bullet } from './bullet';
 
 export const GameEngine = {
   init() {
@@ -16,6 +17,9 @@ export const GameEngine = {
     ]
     const hero = new Hero({ x: 160, y: 360 });
     const crosshair = new CrossHair();
+    const bulletPool = Pool({
+      create: (props) => new Bullet(props)
+    });
 
     GameLoop({
       update() {
@@ -24,8 +28,17 @@ export const GameEngine = {
 
         if (crosshair.canFire()) {
           crosshair.fire();
-          console.log('PEW');
+
+          // add bullet
+          bulletPool.get({
+            x: crosshair.sprite.x,
+            y: crosshair.sprite.y,
+            color: 'magenta',
+            ttl: 60
+          });
         }
+
+        bulletPool.update();
         enemies.forEach(enemy => enemy.update());
       },
 
@@ -33,6 +46,7 @@ export const GameEngine = {
         hero.render();
         enemies.forEach(enemy => enemy.render());
         crosshair.render();
+        bulletPool.render();
       }
     }).start();
   }

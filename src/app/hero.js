@@ -6,7 +6,7 @@ export class Hero extends Base {
     super();
 
     const baseCfg = {
-      color: 'red',
+      color: '#67e6e5',
       width: 20,
       height: 40,
       speed: 3,
@@ -27,12 +27,10 @@ export class Hero extends Base {
 
     // move direction
     let direction;
-    if (keyPressed('a')) {
-      // move left
+    if (keyPressed('a') || keyPressed('left')) {
       direction = -1;
     }
-    else if (keyPressed('d')) {
-      // move right
+    else if (keyPressed('d') || keyPressed('right')) {
       direction = 1;
     } else {
       direction = 0;

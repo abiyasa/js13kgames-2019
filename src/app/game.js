@@ -21,6 +21,11 @@ export const GameEngine = {
       update() {
         crosshair.update();
         hero.update();
+
+        if (crosshair.canFire()) {
+          crosshair.fire();
+          console.log('PEW');
+        }
         enemies.forEach(enemy => enemy.update());
       },
 

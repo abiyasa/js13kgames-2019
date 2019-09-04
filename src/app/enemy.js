@@ -9,11 +9,13 @@ export class Enemy extends Base {
       color: 'black',
       width: 20,
       height: 40,
+      radius: 10,
     }
 
     this.sprite = Sprite({
       x: 100,
       y: 80,
+      anchor: { x: 0.5, y: 0.5 },
       dx: 2,
       ...baseCfg,
       ...props
@@ -23,13 +25,13 @@ export class Enemy extends Base {
   update(dt) {
     const { sprite } = this;
 
-    if (sprite.x + sprite.width > sprite.context.canvas.width) {
+    if (sprite.x + sprite.radius > sprite.context.canvas.width) {
       sprite.dx = -sprite.dx;
     }
-    if (sprite.x < 0) {
+    if (sprite.x - sprite.radius < 0) {
       sprite.dx = -sprite.dx;
     }
 
-    sprite.update(dt);
+    super.update(dt);
   }
 }

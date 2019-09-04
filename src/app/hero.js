@@ -10,11 +10,13 @@ export class Hero extends Base {
       width: 20,
       height: 40,
       speed: 3,
+      radius: 10,
     }
 
     this.sprite = Sprite({
       x: 100,
       y: 80,
+      anchor: { x: 0.5, y: 0.5 },
       ...baseCfg,
       ...props
     });
@@ -38,13 +40,13 @@ export class Hero extends Base {
     sprite.dx = direction * sprite.speed;
 
     // limit movement
-    if (sprite.x + sprite.width > sprite.context.canvas.width) {
-      sprite.x = sprite.context.canvas.width - sprite.width;
+    if (sprite.x + sprite.radius > sprite.context.canvas.width) {
+      sprite.x = sprite.context.canvas.width - sprite.radius;
     }
-    if (sprite.x < 0) {
-      sprite.x = 0;
+    if (sprite.x - sprite.radius < 0) {
+      sprite.x = sprite.radius;
     }
 
-    sprite.update(dt);
+    super.update(dt);
   }
 }

@@ -2,13 +2,11 @@ import { Sprite, track, pointer } from 'kontra';
 import { Base} from './base';
 
 export class CrossHair extends Base {
-  constructor(props = {}) {
-    super();
-
+  init(props = {}) {
     this._isTriggered = false;
     this._fireDelayer = 0;
 
-    this.sprite = Sprite({
+    super.init({
       color: 'blue',
       width: 20,
       height: 20,

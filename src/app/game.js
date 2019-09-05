@@ -10,8 +10,10 @@ export const GameEngine = {
     initKeys();
     initPointer();
 
-    this.hero = new Hero({ x: 160, y: 360 });
+    this.hero = new Hero();
+    this.hero.init({ x: 160, y: 360 });
     this.crosshair = new CrossHair();
+    this.crosshair.init();
 
     this.poolEnemies = Pool({
       create: (props) => new Enemy(props)

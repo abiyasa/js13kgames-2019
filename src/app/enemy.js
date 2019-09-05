@@ -4,11 +4,6 @@ import { Base} from './base';
 export const ENEMY_TYPE_SIMPLE = 0;
 
 export class Enemy extends Base {
-  constructor(props = {}) {
-    super();
-    this.sprite = Sprite(props);
-  }
-
   init(props = {}) {
     this.type = props.type;
 
@@ -20,7 +15,7 @@ export class Enemy extends Base {
       radius: 10,
     }
 
-    this.sprite.init({
+    super.init({
       ...baseCfg,
       ...props
     });

@@ -5,11 +5,6 @@ export const BULLET_HERO = 0;
 export const BULLET_ENEMY = 1;
 
 export class Bullet extends Base {
-  constructor(props = {}) {
-    super();
-    this.sprite = Sprite(props);
-  }
-
   init(props = {}) {
     this.type = props.type;
 
@@ -21,7 +16,7 @@ export class Bullet extends Base {
       radius: 4,
     }
 
-    this.sprite.init({
+    super.init({
       ...baseCfg,
       ...props
     });

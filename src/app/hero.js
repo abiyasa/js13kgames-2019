@@ -2,9 +2,7 @@ import { Sprite, keyPressed } from 'kontra';
 import { Base} from './base';
 
 export class Hero extends Base {
-  constructor(props = {}) {
-    super();
-
+  init(props = {}) {
     const baseCfg = {
       color: '#67e6e5',
       width: 20,
@@ -13,7 +11,7 @@ export class Hero extends Base {
       radius: 10,
     }
 
-    this.sprite = Sprite({
+    super.init({
       x: 100,
       y: 80,
       anchor: { x: 0.5, y: 0.5 },

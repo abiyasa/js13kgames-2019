@@ -1,17 +1,27 @@
+import { Sprite } from 'kontra';
+
 export class Base {
+  constructor(props = {}) {
+    this.sprite = Sprite(props);
+  }
+
+  init(props = {}) {
+    this.sprite.init(props);
+  }
+
   update(dt) {
-    this.sprite && this.sprite.update(dt);
+    this.sprite.update(dt);
   }
 
   render() {
-    this.sprite && this.sprite.render();
+    this.sprite.render();
   }
 
   isAlive() {
-    return this.sprite && this.sprite.isAlive();
+    return this.sprite.isAlive();
   }
 
   collidesWith(target) {
-    return this.sprite && this.sprite.collidesWith(target.sprite);
+    return this.sprite.collidesWith(target.sprite);
   }
 }

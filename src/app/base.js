@@ -5,6 +5,22 @@ export class Base {
     this.sprite = Sprite(props);
   }
 
+  get x() {
+    return this.sprite.x;
+  }
+
+  get y() {
+    return this.sprite.y;
+  }
+
+  get width() {
+    return this.sprite.width;
+  }
+
+  get height() {
+    return this.sprite.width;
+  }
+
   init(props = {}) {
     this.sprite.init(props);
   }

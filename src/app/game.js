@@ -39,7 +39,7 @@ export const GameEngine = {
     hero.update();
 
     if (crosshair.canFire()) {
-      this.heroFire();
+      crosshair.fire(poolBullets, hero.x, hero.y);
     }
 
     this.handleCollisionDetection();
@@ -53,29 +53,6 @@ export const GameEngine = {
     this.poolEnemies.render();
     this.crosshair.render();
     this.poolBullets.render();
-  },
-
-  heroFire() {
-    const { crosshair, hero, poolBullets } = this;
-    const { x: targetX, y: targetY } = crosshair.sprite;
-    const { x: sourceX, y: sourceY } = hero.sprite;
-
-    crosshair.fire();
-
-    // calculate bullet shooting direction
-    const displacement = { x: targetX - sourceX, y: targetY - sourceY };
-    const distance = Math.sqrt((displacement.x ** 2) + (displacement.y ** 2));
-
-    // add bullet
-    poolBullets.get({
-      type: TYPE_BULLET_HERO,
-      x: sourceX,
-      y: sourceY,
-      dx: displacement.x / distance * 10,
-      dy: displacement.y / distance * 10,
-      color: 'magenta',
-      ttl: 60
-    });
   },
 
   controlEnemiesPopulation() {

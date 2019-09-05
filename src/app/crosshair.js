@@ -1,5 +1,6 @@
-import { Sprite, track, pointer } from 'kontra';
+import { track, pointer } from 'kontra';
 import { Base} from './base';
+import { TYPE_BULLET_HERO } from './bullet';
 
 export class CrossHair extends Base {
   init(props = {}) {
@@ -37,8 +38,25 @@ export class CrossHair extends Base {
     return this._isTriggered && (this._fireDelayer == 0);
   }
 
-  fire() {
+  fire(poolBullets, fromX, fromY) {
     this._fireDelayer = 10;
+
+    // calculate bullet shooting direction
+    const { x: toX, y: toY } = this.sprite;
+    console.log(`firing from (${fromX},${fromY}) to (${toX},${toY})`);
+    const displacement = { x: toX - fromX, y: toY - fromY };
+    const distance = Math.sqrt((displacement.x ** 2) + (displacement.y ** 2));
+
+    // add bullet
+    poolBullets.get({
+      type: TYPE_BULLET_HERO,
+      x: fromX,
+      y: fromY,
+      dx: displacement.x / distance * 10,
+      dy: displacement.y / distance * 10,
+      color: 'magenta',
+      ttl: 60
+    });
   }
 
   _setTrigger(val) {

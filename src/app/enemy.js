@@ -1,4 +1,3 @@
-import { Sprite } from 'kontra';
 import { Base} from './base';
 
 export const TYPE_ENEMY_SIMPLE = 200;

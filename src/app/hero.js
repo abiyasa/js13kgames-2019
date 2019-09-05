@@ -1,4 +1,4 @@
-import { Sprite, keyPressed } from 'kontra';
+import { keyPressed } from 'kontra';
 import { Base} from './base';
 
 export const TYPE_HERO = 101;

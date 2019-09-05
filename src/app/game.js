@@ -17,7 +17,7 @@ export const GameEngine = {
     ]
     this.hero = new Hero({ x: 160, y: 360 });
     this.crosshair = new CrossHair();
-    this.bulletPool = Pool({
+    this.poolBullets = Pool({
       create: (props) => new Bullet(props)
     });
 
@@ -28,7 +28,7 @@ export const GameEngine = {
   },
 
   update() {
-    const { crosshair, hero, bulletPool, enemies } = this;
+    const { crosshair, hero, poolBullets, enemies } = this;
 
     crosshair.update();
     hero.update();
@@ -37,7 +37,7 @@ export const GameEngine = {
       this.shoot();
     }
 
-    bulletPool.update();
+    poolBullets.update();
     enemies.forEach(enemy => enemy.update());
   },
 
@@ -45,11 +45,11 @@ export const GameEngine = {
     this.hero.render();
     this.enemies.forEach(enemy => enemy.render());
     this.crosshair.render();
-    this.bulletPool.render();
+    this.poolBullets.render();
   },
 
   shoot() {
-    const { crosshair, hero, bulletPool } = this;
+    const { crosshair, hero, poolBullets } = this;
     const { x: targetX, y: targetY } = crosshair.sprite;
     const { x: sourceX, y: sourceY } = hero.sprite;
 
@@ -60,14 +60,14 @@ export const GameEngine = {
     const distance = Math.sqrt((displacement.x ** 2) + (displacement.y ** 2));
 
     // add bullet
-    bulletPool.get({
+    poolBullets.get({
       x: sourceX,
       y: sourceY,
       dx: displacement.x / distance * 10,
       dy: displacement.y / distance * 10,
       color: 'magenta',
       ttl: 60
-    });
+  });
   }
 
 };

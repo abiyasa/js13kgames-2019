@@ -111,17 +111,23 @@ export const GameEngine = {
   },
 
   checkHeroBulletAgainstItems(bullet, items) {
-    items.forEach(item => {
-      if (!item.isAlive()) return;
+    items.every(item => {
+      if (!item.isAlive()) return true;
 
       if (item.type === TYPE_ENEMY_SIMPLE) {
         if (item.collidesWith(bullet)) {
-          // remove item
+          // remove both item
           item.kill();
+          bullet.kill();
 
-          // TODO: score
+          // TODO: add to hero score
+
+          // short-circuit loop
+          return false;
         }
       }
+
+      return true;
     });
   },
 

@@ -18,9 +18,9 @@ export const GameEngine = {
     this.poolEnemies = Pool({
       create: (props) => new Enemy(props)
     });
-    this.poolEnemies.get({ color: '#FF8080', x: 320, y: 10, dx: 2, ttl: Infinity });
-    this.poolEnemies.get({ color: '#80FF80', x: 160, y: 60, dx: 4, ttl: Infinity });
-    this.poolEnemies.get({ color: '#8080FF', x: 480, y: 150, dx: 2, ttl: Infinity });
+    for (let _ = 0; _ < 8; _++) {
+      this.generateEnemies();
+    }
 
     this.poolBullets = Pool({
       create: (props) => new Bullet(props)
@@ -74,6 +74,18 @@ export const GameEngine = {
       color: 'magenta',
       ttl: 60
     });
-  }
+  },
 
+  generateEnemies() {
+    // TODO: handle enemy type here
+    const { random, floor } = Math;
+    const randColor = floor(random() * 255).toString(16);
+    this.poolEnemies.get({
+      color: `#${randColor}8080`,
+      x: 160 + floor(random() * 320),
+      y: 20 + floor(random() * 200),
+      dx: 1 + floor(random() * 3),
+      ttl: Infinity
+    });
+  }
 };

@@ -39,7 +39,7 @@ export class CrossHair extends Base {
   }
 
   fire(poolBullets, fromX, fromY) {
-    this._fireDelayer = 10;
+    this._fireDelayer = 20;
 
     // calculate bullet shooting direction
     const { x: toX, y: toY } = this.sprite;

@@ -1,7 +1,7 @@
 import { Sprite } from 'kontra';
 import { Base} from './base';
 
-export const ENEMY_TYPE_SIMPLE = 0;
+export const TYPE_ENEMY_SIMPLE = 200;
 
 export class Enemy extends Base {
   init(props = {}) {

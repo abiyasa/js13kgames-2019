@@ -21,6 +21,14 @@ export class Base {
     return this.sprite.isAlive();
   }
 
+  isAlive() {
+    return this.sprite.isAlive();
+  }
+
+  kill() {
+    this.sprite.ttl = 0;
+  }
+
   collidesWith(target) {
     return this.sprite.collidesWith(target.sprite);
   }

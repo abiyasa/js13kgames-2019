@@ -1,9 +1,12 @@
 import { Sprite, keyPressed } from 'kontra';
 import { Base} from './base';
 
+export const TYPE_HERO = 101;
+
 export class Hero extends Base {
   init(props = {}) {
     const baseCfg = {
+      type: TYPE_HERO,
       color: '#67e6e5',
       width: 20,
       height: 40,

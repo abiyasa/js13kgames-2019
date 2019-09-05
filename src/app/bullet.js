@@ -1,8 +1,8 @@
 import { Sprite } from 'kontra';
 import { Base} from './base';
 
-export const BULLET_HERO = 0;
-export const BULLET_ENEMY = 1;
+export const TYPE_BULLET_HERO = 100;
+export const TYPE_BULLET_ENEMY = 101;
 
 export class Bullet extends Base {
   init(props = {}) {

@@ -1,22 +1,26 @@
 import { Sprite } from 'kontra';
 import { Base} from './base';
 
+export const ENEMY_TYPE_SIMPLE = 0;
+
 export class Enemy extends Base {
   constructor(props = {}) {
     super();
+    this.sprite = Sprite(props);
+  }
+
+  init(props = {}) {
+    this.type = props.type;
 
     const baseCfg = {
       color: 'black',
+      anchor: { x: 0.5, y: 0.5 },
       width: 20,
       height: 40,
       radius: 10,
     }
 
-    this.sprite = Sprite({
-      x: 100,
-      y: 80,
-      anchor: { x: 0.5, y: 0.5 },
-      dx: 2,
+    this.sprite.init({
       ...baseCfg,
       ...props
     });

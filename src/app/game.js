@@ -2,7 +2,7 @@ import { init, initPointer, initKeys, GameLoop, Pool } from 'kontra';
 import { Hero } from './hero';
 import { CrossHair } from './crosshair';
 import { Enemy } from './enemy';
-import { Bullet } from './bullet';
+import { Bullet, BULLET_HERO, BULLET_ENEMY } from './bullet';
 
 export const GameEngine = {
   init() {
@@ -10,13 +10,16 @@ export const GameEngine = {
     initKeys();
     initPointer();
 
-    this.enemies = [
-      new Enemy({ color: '#FF8080', x: 320, y: 10 }),
-      new Enemy({ color: '#80FF80', x: 160, y: 60 }),
-      new Enemy({ color: '#8080FF', x: 480, y: 150 }),
-    ]
     this.hero = new Hero({ x: 160, y: 360 });
     this.crosshair = new CrossHair();
+
+    this.poolEnemies = Pool({
+      create: (props) => new Enemy(props)
+    });
+    this.poolEnemies.get({ color: '#FF8080', x: 320, y: 10, dx: 2, ttl: Infinity });
+    this.poolEnemies.get({ color: '#80FF80', x: 160, y: 60, dx: 4, ttl: Infinity });
+    this.poolEnemies.get({ color: '#8080FF', x: 480, y: 150, dx: 2, ttl: Infinity });
+
     this.poolBullets = Pool({
       create: (props) => new Bullet(props)
     });
@@ -28,27 +31,27 @@ export const GameEngine = {
   },
 
   update() {
-    const { crosshair, hero, poolBullets, enemies } = this;
+    const { crosshair, hero, poolBullets, poolEnemies } = this;
 
     crosshair.update();
     hero.update();
 
     if (crosshair.canFire()) {
-      this.shoot();
+      this.heroFire();
     }
 
     poolBullets.update();
-    enemies.forEach(enemy => enemy.update());
+    poolEnemies.update();
   },
 
   render() {
     this.hero.render();
-    this.enemies.forEach(enemy => enemy.render());
+    this.poolEnemies.render();
     this.crosshair.render();
     this.poolBullets.render();
   },
 
-  shoot() {
+  heroFire() {
     const { crosshair, hero, poolBullets } = this;
     const { x: targetX, y: targetY } = crosshair.sprite;
     const { x: sourceX, y: sourceY } = hero.sprite;
@@ -61,13 +64,14 @@ export const GameEngine = {
 
     // add bullet
     poolBullets.get({
+      type: BULLET_HERO,
       x: sourceX,
       y: sourceY,
       dx: displacement.x / distance * 10,
       dy: displacement.y / distance * 10,
       color: 'magenta',
       ttl: 60
-  });
+    });
   }
 
 };

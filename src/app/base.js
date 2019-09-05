@@ -7,6 +7,10 @@ export class Base {
     this.sprite && this.sprite.render();
   }
 
+  isAlive() {
+    return this.sprite && this.sprite.isAlive();
+  }
+
   collidesWith(target) {
     return this.sprite && this.sprite.collidesWith(target.sprite);
   }

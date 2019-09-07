@@ -5,8 +5,6 @@ export const TYPE_BULLET_ENEMY = 101;
 
 export class Bullet extends Base {
   init(props = {}) {
-    this.type = props.type;
-
     const baseCfg = {
       anchor: { x: 0.5, y: 0.5 },
       color: 'blue',

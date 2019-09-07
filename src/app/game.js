@@ -4,6 +4,11 @@ import { CrossHair } from './crosshair';
 import { Enemy, TYPE_ENEMY_SIMPLE } from './enemy';
 import { Bullet, TYPE_BULLET_HERO, TYPE_BULLET_ENEMY } from './bullet';
 
+const { random, floor } = Math;
+const getRandomNumber = (min, max) => min + floor(random() * max);
+
+const EVENT_TYPE_ADD_ENEMY = 1;
+
 export const GameEngine = {
   init() {
     init();
@@ -23,6 +28,7 @@ export const GameEngine = {
     });
 
     this.quadtree = Quadtree();
+    this.eventQueue = [];
 
     GameLoop({
       update: () => this.update(),
@@ -33,6 +39,7 @@ export const GameEngine = {
   update() {
     const { crosshair, hero, poolBullets, poolEnemies } = this;
 
+    this.updateEventQueue();
     this.controlEnemiesPopulation();
 
     crosshair.update();
@@ -55,16 +62,51 @@ export const GameEngine = {
     this.poolBullets.render();
   },
 
-  controlEnemiesPopulation() {
-    const enemies = this.poolEnemies.getAliveObjects();
-    if (enemies.length < 8) {
-      const numToGenerate = 8 - enemies.length;
+  updateEventQueue() {
+    const { eventQueue } = this;
 
-      // TODO: add delayer
-      for (let _ = 0; _ < numToGenerate; _++) {
+    if (eventQueue.length === 0) return;
+
+    const nextEvent = eventQueue[0];
+    if (nextEvent.delay > 0) {
+      nextEvent.delay--;
+      return;
+    }
+
+    // process event
+    const event = eventQueue.shift();
+    switch (event.type) {
+      case EVENT_TYPE_ADD_ENEMY:
+      default:
         this.generateEnemies();
+    }
+  },
+
+  controlEnemiesPopulation() {
+    const aliveEnemiesCount = this.poolEnemies.getAliveObjects().length;
+    const futureEnemiesCount = this.eventQueue.filter(e => e.type === EVENT_TYPE_ADD_ENEMY).length;
+    const totalEnemiesCount = aliveEnemiesCount + futureEnemiesCount;
+
+    if (totalEnemiesCount < 8) {
+      const numToGenerate = 8 - totalEnemiesCount;
+
+      for (let _ = 0; _ < numToGenerate; _++) {
+        console.log(`adding ${numToGenerate} enemies`);
+
+        this.eventQueue.push({
+          type: EVENT_TYPE_ADD_ENEMY,
+          delay: getRandomNumber(0, 20)
+        });
       }
     }
+  },
+
+  generateEnemies() {
+    // TODO: check level & generate behaviour
+    this.poolEnemies.get({
+      type: TYPE_ENEMY_SIMPLE,
+      behaviour: 0
+    });
   },
 
   handleCollisionDetection() {
@@ -107,17 +149,4 @@ export const GameEngine = {
       return true;
     });
   },
-
-  generateEnemies() {
-    const { random, floor } = Math;
-    const randColor = floor(random() * 255).toString(16);
-    this.poolEnemies.get({
-      type: TYPE_ENEMY_SIMPLE,
-      color: `#${randColor}8080`,
-      x: 160 + floor(random() * 320),
-      y: 20 + floor(random() * 200),
-      dx: 1 + floor(random() * 3),
-      ttl: Infinity
-    });
-  }
 };

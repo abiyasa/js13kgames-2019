@@ -43,7 +43,7 @@ export class CrossHair extends Base {
 
     // calculate bullet shooting direction
     const { x: toX, y: toY } = this.sprite;
-    console.log(`firing from (${fromX},${fromY}) to (${toX},${toY})`);
+    // console.log(`firing from (${fromX},${fromY}) to (${toX},${toY})`);
     const displacement = { x: toX - fromX, y: toY - fromY };
     const distance = Math.sqrt((displacement.x ** 2) + (displacement.y ** 2));
 
@@ -54,7 +54,7 @@ export class CrossHair extends Base {
       y: fromY,
       dx: displacement.x / distance * 10,
       dy: displacement.y / distance * 10,
-      color: 'magenta',
+      color: 'cyan',
       ttl: 60
     });
   }

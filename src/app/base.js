@@ -22,6 +22,8 @@ export class Base {
   }
 
   init(props = {}) {
+    this.type = props.type;
+
     this.sprite.init(props);
   }
 

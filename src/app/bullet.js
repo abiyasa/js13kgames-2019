@@ -1,4 +1,4 @@
-import { Base} from './base';
+import { Base } from './base';
 
 export const TYPE_BULLET_HERO = 100;
 export const TYPE_BULLET_ENEMY = 101;
@@ -20,8 +20,12 @@ export class Bullet extends Base {
 
   update(dt) {
     const { sprite } = this;
+    const canvas = sprite.context.canvas;
 
-    if ((sprite.x > sprite.context.canvas.width) || (sprite.x < 0)) {
+    if (
+      (sprite.x > canvas.width) || (sprite.x < 0) ||
+      (sprite.y > canvas.height) || (sprite.y < 0)
+    ) {
       sprite.ttl = 0;
     }
 

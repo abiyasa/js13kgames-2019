@@ -1,17 +1,16 @@
 import { Base} from './base';
 import { TYPE_BULLET_ENEMY } from './bullet';
-
-const { random, floor } = Math;
+import { getRandomNumber } from './utils';
 
 export const TYPE_ENEMY_SIMPLE = 200;
 
-// TODO: movement type
-// - straight from top to bottom
+// enemy behaviour
+// - 0: straight from top to bottom, fire towards hero once randomly
 // - chase slowly towards player
 // - straight from top and then stop within distance (to fire)
 // - straight from top and then stop within distance (to fire) for a delay, and then continue
 
-// TODO: shooting type
+// NOTE: shooting type
 // - shoot every X secs towards player
 // - shoot once
 // - shoot with certain pattern direction
@@ -20,6 +19,8 @@ export const TYPE_ENEMY_SIMPLE = 200;
 export class Enemy extends Base {
   init(props = {}) {
     const baseCfg = {
+      ttl: Infinity,
+      type: TYPE_ENEMY_SIMPLE,
       color: 'black',
       width: 20,
       height: 40,
@@ -27,31 +28,46 @@ export class Enemy extends Base {
     };
 
     this.behaviour = props.behaviour;
-    let movementCfg = getInitialCfg(this.behaviour);
 
     super.init({
       ...baseCfg,
-      ...movementCfg,
+      ...getInitialCfg(this.behaviour),
       ...props
     });
   }
 
+  watch(hero, poolBullets) {
+    this.hero = hero;
+    this.poolBullets = poolBullets;
+  }
+
   update(dt) {
-    const { sprite } = this;
+    const { sprite, behaviour } = this;
+    const canvas = sprite.context.canvas;
+    const posY = sprite.y;
 
-    // limit movement
-    if (sprite.x + sprite.radius > sprite.context.canvas.width) {
-      sprite.dx = -sprite.dx;
-    } else if (sprite.x - sprite.radius < 0) {
-      sprite.dx = -sprite.dx;
+    switch (behaviour) {
+      case 0:
+        if (posY + sprite.radius > canvas.height + 100) {
+          this.kill();
+        }
+
+        if (sprite.shootDelay <= 0) {
+          this.fire(sprite.poolBullets, sprite.hero.x, sprite.hero.y, 2);
+          sprite.shootDelay = Infinity; // shoot only once
+        } else {
+          sprite.shootDelay--;
+        }
+        break;
+
+      default:
+        break;
     }
-
-    // TODO: to shot or not
 
     super.update(dt);
   }
 
-  fire(poolBullets, toX, toY, velocity = 10) {
+  fire(poolBullets, toX, toY, velocity = 10, ttl = Infinity) {
     this._fireDelayer = 20;
 
     // calculate bullet shooting direction
@@ -68,23 +84,30 @@ export class Enemy extends Base {
       dx: (displacement.x / distance) * velocity,
       dy: (displacement.y / distance) * velocity,
       color: 'red',
-      ttl: 60
+      ttl
     });
   }
 }
 
-function getInitialCfg(enemyBehaviour) {
-  const randColor = floor(random() * 255).toString(16);
+function getInitialCfg(behaviour) {
+  const randColor = getRandomNumber(0, 255).toString(16);
 
-  switch (enemyBehaviour) {
+  switch (behaviour) {
     case 0:
+      return {
+        color: `#${randColor}8080`,
+        shootDelay: getRandomNumber(30, 50),
+        x: getRandomNumber(160, 480),
+        y: -20,
+        dy: getRandomNumber(1, 4),
+      };
+
     default:
       return {
-        ttl: Infinity,
         color: `#${randColor}8080`,
-        x: 160 + floor(random() * 320),
-        y: 20 + floor(random() * 200),
-        dx: 1 + floor(random() * 3),
+        x: getRandomNumber(160, 480),
+        y: getRandomNumber(20, 220),
+        dx: getRandomNumber(1, 4),
       };
   };
 }

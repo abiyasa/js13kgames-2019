@@ -3,9 +3,7 @@ import { Hero, TYPE_HERO } from './hero';
 import { CrossHair } from './crosshair';
 import { Enemy, TYPE_ENEMY_SIMPLE } from './enemy';
 import { Bullet, TYPE_BULLET_HERO, TYPE_BULLET_ENEMY } from './bullet';
-
-const { random, floor } = Math;
-const getRandomNumber = (min, max) => min + floor(random() * max);
+import { getRandomNumber } from './utils';
 
 const EVENT_TYPE_ADD_ENEMY = 1;
 
@@ -64,8 +62,8 @@ export const GameEngine = {
   },
 
   render() {
-    this.hero.render();
     this.poolEnemies.render();
+    this.hero.render();
     this.crosshair.render();
     this.poolBullets.render();
   },
@@ -112,7 +110,8 @@ export const GameEngine = {
   generateEnemies() {
     // TODO: check level & generate behaviour
     this.poolEnemies.get({
-      type: TYPE_ENEMY_SIMPLE,
+      hero: this.hero,
+      poolBullets: this.poolBullets,
       behaviour: 0
     });
   },

@@ -20,20 +20,20 @@ export const GameEngine = {
     this.crosshair = new CrossHair();
     this.crosshair.init();
 
-    this.poolEnemies = Pool({
-      create: (props) => new Enemy(props)
-    });
-    this.poolBullets = Pool({
-      create: (props) => new Bullet(props)
-    });
+    this.poolEnemies = Pool({ create: props => new Enemy(props) });
+    this.poolBullets = Pool({ create: props => new Bullet(props) });
 
     this.quadtree = Quadtree();
     this.eventQueue = [];
 
-    GameLoop({
+    this.gameloop = GameLoop({
       update: () => this.update(),
       render: () => this.render(),
-    }).start();
+    });
+  },
+
+  start() {
+    this.gameloop.start();
   },
 
   update() {

@@ -12,10 +12,36 @@ body {
   background-color: #000;
 }
 
-#canvas-main {
-  display: block;
+.container-main {
   margin: 0 auto;
-  width: 100%;
   max-width: 960px;
+  position: relative;
+}
+
+#canvas-main {
+  position: absolute;
+  width: 100%;
   background-color: white;
+}
+
+.ui-game {
+  font-family: 'Courier New', Courier, monospace;
+  display: block;
+  position: relative;
+  height: 40px;;
+}
+
+#button-pause {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 20px;
+  position: absolute;
+  right: 20px;
+  top: 20px;
+}
+
+#ui-hero-hp {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  color: #000;
 }

@@ -1,8 +1,15 @@
 import { GameEngine } from './app/game';
 import './styles/main.css'
 
-GameEngine.init();
+const gameUI = {
+  btnPause: document.querySelector('#button-pause'),
+  labelHeroHp: document.querySelector('#ui-hero-hp'),
+};
+
+GameEngine.init({ gameUI });
 GameEngine.start();
-document.querySelector('#button-pause').addEventListener('click', () => {
-  GameEngine.pause();
+
+gameUI.btnPause.addEventListener('click', () => {
+  const isPaused = GameEngine.pause();
+  gameUI.btnPause.textContent = isPaused ? 'Pause' : 'Unpause';
 });

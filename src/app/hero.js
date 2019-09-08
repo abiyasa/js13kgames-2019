@@ -5,6 +5,8 @@ export const TYPE_HERO = 101;
 
 export class Hero extends Base {
   init(props = {}) {
+    this.hp = props.hp;
+
     const baseCfg = {
       type: TYPE_HERO,
       color: '#67e6e5',

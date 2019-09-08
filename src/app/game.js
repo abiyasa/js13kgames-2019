@@ -8,13 +8,13 @@ import { getRandomNumber } from './utils';
 const EVENT_TYPE_ADD_ENEMY = 1;
 
 export const GameEngine = {
-  init() {
+  init(props = {}) {
     init();
     initKeys();
     initPointer();
 
     this.hero = new Hero();
-    this.hero.init({ x: 160, y: 360 });
+    this.hero.init({ x: 160, y: 360, hp: 3 });
     this.crosshair = new CrossHair();
     this.crosshair.init();
 
@@ -23,6 +23,8 @@ export const GameEngine = {
 
     this.quadtree = Quadtree();
     this.eventQueue = [];
+
+    this.gameUI = props.gameUI;
 
     this.gameloop = GameLoop({
       update: () => this.update(),
@@ -35,11 +37,14 @@ export const GameEngine = {
   },
 
   pause() {
-    if (this.gameloop.isStopped) {
+    const isStopped = this.gameloop.isStopped;
+    if (isStopped) {
       this.gameloop.start();
     } else {
       this.gameloop.stop();
     }
+
+    return isStopped;
   },
 
   update() {
@@ -66,6 +71,15 @@ export const GameEngine = {
     this.hero.render();
     this.crosshair.render();
     this.poolBullets.render();
+
+    this.renderUI();
+  },
+
+  renderUI() {
+    const { labelHeroHp } = this.gameUI;
+
+    console.log('rendering ', this.hero.hp);
+    labelHeroHp.textContent = this.hero.hp;
   },
 
   updateEventQueue() {

@@ -20,7 +20,6 @@ export const TYPE_ENEMY_SIMPLE = 200;
 export class Enemy extends Base {
   init(props = {}) {
     const baseCfg = {
-      anchor: { x: 0.5, y: 0.5 },
       color: 'black',
       width: 20,
       height: 40,

@@ -17,7 +17,6 @@ export class Hero extends Base {
     super.init({
       x: 100,
       y: 80,
-      anchor: { x: 0.5, y: 0.5 },
       ...baseCfg,
       ...props
     });

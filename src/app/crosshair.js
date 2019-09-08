@@ -12,7 +12,6 @@ export class CrossHair extends Base {
       width: 20,
       height: 20,
       radius: 10,
-      anchor: { x: 0.5, y: 0.5 },
       onUp: () => this._setTrigger(false),
       onDown: () => this._setTrigger(true),
       ...props

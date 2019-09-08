@@ -24,7 +24,10 @@ export class Base {
   init(props = {}) {
     this.type = props.type;
 
-    this.sprite.init(props);
+    this.sprite.init({
+      anchor: { x: 0.5, y: 0.5 },
+      ...props
+    });
   }
 
   update(dt) {

@@ -95,7 +95,7 @@ export const GameEngine = {
 
         this.eventQueue.push({
           type: EVENT_TYPE_ADD_ENEMY,
-          delay: getRandomNumber(0, 20)
+          delay: getRandomNumber(0, 80)
         });
       }
     }

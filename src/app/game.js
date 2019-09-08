@@ -36,6 +36,14 @@ export const GameEngine = {
     this.gameloop.start();
   },
 
+  pause() {
+    if (this.gameloop.isStopped) {
+      this.gameloop.start();
+    } else {
+      this.gameloop.stop();
+    }
+  },
+
   update() {
     const { crosshair, hero, poolBullets, poolEnemies } = this;
 

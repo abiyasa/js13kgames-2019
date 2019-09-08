@@ -1,4 +1,4 @@
-import { track, pointer } from 'kontra';
+import { track, pointer, SpriteSheet } from 'kontra';
 import { Base} from './base';
 import { TYPE_BULLET_HERO } from './bullet';
 
@@ -8,7 +8,7 @@ export class CrossHair extends Base {
     this._fireDelayer = 0;
 
     super.init({
-      image: this.initSpriteSheets(),
+      animations: this.initSpriteSheets().animations,
       width: 40,
       height: 40,
       radius: 20,
@@ -23,18 +23,31 @@ export class CrossHair extends Base {
   initSpriteSheets() {
     const canvas = document.createElement('canvas');
     canvas.id = 'canvas-crosshair';
-    canvas.width = 40;
+    canvas.width = 80;
     canvas.height = 40;
 
     const ctx = canvas.getContext('2d');
-    ctx.font = `40px serif`;
+    ctx.font = '40px serif';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
-    // ctx.fillRect(0, 0, canvas.width - 1, canvas.height - 1);
-    ctx.fillText('☩', 20, 22);
 
-    return canvas;
+    // ctx.fillRect(0, 0, canvas.width - 1, canvas.height - 1);
+    ctx.fillText('☩', 19, 22);
+    ctx.font = '45px serif';
+    ctx.fillText('☩', 59, 23);
+
+    return SpriteSheet({
+      image: canvas,
+      frameWidth: 40,
+      frameHeight: 40,
+      animations: {
+        beat: {
+          frames: '0..1',
+          frameRate: 2
+        }
+      }
+    });
   }
 
   update(dt) {

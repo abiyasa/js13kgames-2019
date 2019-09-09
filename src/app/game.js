@@ -142,12 +142,19 @@ export const GameEngine = {
       if (!bullet.isAlive()) return;
 
       const nodeItems = quadtree.get(bullet);
-      const bulletType = bullet.type;
 
-      if (bulletType === TYPE_BULLET_HERO) {
-        this.checkHeroBulletAgainstItems(bullet, nodeItems);
+      switch (bullet.type) {
+        case TYPE_BULLET_HERO:
+          this.checkHeroBulletAgainstItems(bullet, nodeItems);
+          break;
+
+        case TYPE_BULLET_ENEMY:
+          this.checkEnemyBulletAgainstHero(hero, bullet);
+          break;
       }
     });
+
+    // TODO: check hit between enemies & hero
   },
 
   checkHeroBulletAgainstItems(bullet, items) {
@@ -170,4 +177,13 @@ export const GameEngine = {
       return true;
     });
   },
+
+  checkEnemyBulletAgainstHero(hero, bullet) {
+    if (hero.isHittable() && hero.collidesWith(bullet)) {
+      bullet.kill();
+      hero.getHit(bullet);
+
+      // TODO: check hero hp
+    }
+  }
 };

@@ -36,11 +36,6 @@ export class Enemy extends Base {
     });
   }
 
-  watch(hero, poolBullets) {
-    this.hero = hero;
-    this.poolBullets = poolBullets;
-  }
-
   update(dt) {
     const { sprite, behaviour } = this;
     const canvas = sprite.context.canvas;

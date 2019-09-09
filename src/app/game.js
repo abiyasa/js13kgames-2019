@@ -56,7 +56,7 @@ export const GameEngine = {
     crosshair.update();
     hero.update();
 
-    if (crosshair.canFire()) {
+    if (crosshair.canFire() && hero.isHittable()) {
       crosshair.fire(poolBullets, hero.x, hero.y);
     }
 

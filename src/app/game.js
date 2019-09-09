@@ -78,7 +78,6 @@ export const GameEngine = {
   renderUI() {
     const { labelHeroHp } = this.gameUI;
 
-    console.log('rendering ', this.hero.hp);
     labelHeroHp.textContent = this.hero.hp;
   },
 
@@ -149,12 +148,16 @@ export const GameEngine = {
           break;
 
         case TYPE_BULLET_ENEMY:
-          this.checkEnemyBulletAgainstHero(hero, bullet);
+          this.checkHeroHitItem(hero, bullet);
           break;
       }
     });
 
-    // TODO: check hit between enemies & hero
+    enemies.forEach(enemy => {
+      if (!enemy.isAlive()) return;
+
+      this.checkHeroHitItem(hero, enemy);
+    });
   },
 
   checkHeroBulletAgainstItems(bullet, items) {
@@ -178,12 +181,16 @@ export const GameEngine = {
     });
   },
 
-  checkEnemyBulletAgainstHero(hero, bullet) {
-    if (hero.isHittable() && hero.collidesWith(bullet)) {
-      bullet.kill();
-      hero.getHit(bullet);
+  checkHeroHitItem(hero, item) {
+    if (hero.isHittable() && hero.collidesWith(item)) {
+      item.kill();
+      hero.getHit(item);
 
-      // TODO: check hero hp
+      if (hero.hp <= 0) {
+        console.log('GAME OVER');
+
+        // TODO: create event for game over
+      }
     }
-  }
+  },
 };

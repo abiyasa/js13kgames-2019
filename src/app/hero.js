@@ -32,7 +32,7 @@ export class Hero extends Base {
     return !this._invisible;
   }
 
-  getHit(bullet) {
+  getHit(item) {
     this.hp--;
 
     // set invisible for a moment
@@ -79,7 +79,7 @@ export class Hero extends Base {
   }
 
   render() {
-    // TODO: proper blinking animation when get hit
+    // blinking animation when get hit
     if (this._isGetHit && (this._getHitFrame % 10) <= 4) {
       return;
     }

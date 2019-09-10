@@ -43,6 +43,7 @@ export const GameEngine = {
     this.gameUI = props.gameUI;
 
     this._gameState = GAME_STATE_INIT;
+    this._gameScore = 0;
 
     this.gameloop = GameLoop({
       update: () => this.update(),
@@ -101,9 +102,10 @@ export const GameEngine = {
   },
 
   renderUI() {
-    const { labelHeroHp } = this.gameUI;
+    const { labelHeroHp, labelScore } = this.gameUI;
 
-    labelHeroHp.textContent = this.hero.hp;
+    labelHeroHp.textContent = `♡ ${this.hero.hp}`;
+    labelScore.textContent = this._gameScore;
   },
 
   updateEventQueue() {
@@ -204,7 +206,7 @@ export const GameEngine = {
           item.kill();
           bullet.kill();
 
-          // TODO: add to hero score
+          this._gameScore += 10;
 
           // short-circuit loop
           return false;

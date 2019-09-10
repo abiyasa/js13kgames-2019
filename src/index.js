@@ -4,6 +4,7 @@ import './styles/main.css'
 const gameUI = {
   btnPause: document.querySelector('#button-pause'),
   labelHeroHp: document.querySelector('#ui-hero-hp'),
+  labelScore: document.querySelector('#ui-score'),
 };
 
 async function main() {

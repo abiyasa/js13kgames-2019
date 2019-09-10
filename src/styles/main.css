@@ -28,20 +28,33 @@ body {
   font-family: 'Courier New', Courier, monospace;
   display: block;
   position: relative;
-  height: 40px;;
+  top: 10px;
+  height: 40px;
+
+  color: #000;
+  font-weight: bold;
+}
+
+button {
+  border-radius: 0;
+  background: white;
+  border: solid 2px #000;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 20px;
 }
 
 #button-pause {
-  font-family: 'Courier New', Courier, monospace;
-  font-size: 20px;
   position: absolute;
   right: 20px;
-  top: 20px;
 }
 
 #ui-hero-hp {
   position: absolute;
-  top: 20px;
   left: 20px;
-  color: #000;
+}
+
+#ui-score {
+  position: absolute;
+  left: 50%;
+  padding-top: 6px;
 }

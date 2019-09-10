@@ -3,7 +3,8 @@ import { Hero, TYPE_HERO } from './hero';
 import { CrossHair } from './crosshair';
 import { Enemy, TYPE_ENEMY_SIMPLE } from './enemy';
 import { Bullet, TYPE_BULLET_HERO, TYPE_BULLET_ENEMY } from './bullet';
-import { getRandomNumber } from './utils';
+import { getRandomNumber, createCanvasFromSVG } from './utils';
+import heroAsset from './hero.svg';
 
 const EVENT_TYPE_ADD_ENEMY = 1;
 const EVENT_TYPE_GAME_OVER = 50;
@@ -13,14 +14,23 @@ const GAME_STATE_START = 20;
 const GAME_STATE_PAUSED = 30;
 const GAME_STATE_GAME_OVER = 40;
 
+async function initAssets() {
+  const hero = await createCanvasFromSVG(heroAsset, 20, 40);
+
+  return {
+    hero
+  };
+}
+
 export const GameEngine = {
-  init(props = {}) {
+  async init(props = {}) {
     init();
     initKeys();
     initPointer();
+    const asset = await initAssets();
 
     this.hero = new Hero();
-    this.hero.init({ x: 160, y: 360, hp: 3 });
+    this.hero.init({ x: 160, y: 360, hp: 3, image: asset.hero });
     this.crosshair = new CrossHair();
     this.crosshair.init();
 

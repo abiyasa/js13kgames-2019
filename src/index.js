@@ -6,17 +6,21 @@ const gameUI = {
   labelHeroHp: document.querySelector('#ui-hero-hp'),
 };
 
-GameEngine.init({ gameUI });
-GameEngine.start();
+async function main() {
+  await GameEngine.init({ gameUI });
+  GameEngine.start();
 
-gameUI.btnPause.addEventListener('click', () => {
-  if (GameEngine.isGameOver()) return;
+  gameUI.btnPause.addEventListener('click', () => {
+    if (GameEngine.isGameOver()) return;
 
-  const isPaused = GameEngine.pause();
-  gameUI.btnPause.textContent = isPaused ? 'Pause' : 'Unpause';
-});
+    const isPaused = GameEngine.pause();
+    gameUI.btnPause.textContent = isPaused ? 'Pause' : 'Unpause';
+  });
 
-document.addEventListener('gameOver', () => {
-  // TODO display game over
-  console.log('GAME OVER');
-});
+  document.addEventListener('gameOver', () => {
+    // TODO display game over
+    console.log('GAME OVER');
+  });
+}
+
+main();

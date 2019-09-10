@@ -111,9 +111,12 @@ export const GameEngine = {
     const event = eventQueue.shift();
     switch (event.type) {
       case EVENT_TYPE_GAME_OVER:
-        // TODO: handle game over event properly, display label
         this._gameState = GAME_STATE_GAME_OVER;
         this.gameloop.stop();
+
+        // notify game over
+        const event = new Event('gameOver');
+        document.dispatchEvent(event);
         break;
 
       case EVENT_TYPE_ADD_ENEMY:

@@ -15,3 +15,8 @@ gameUI.btnPause.addEventListener('click', () => {
   const isPaused = GameEngine.pause();
   gameUI.btnPause.textContent = isPaused ? 'Pause' : 'Unpause';
 });
+
+document.addEventListener('gameOver', () => {
+  // TODO display game over
+  console.log('GAME OVER');
+});

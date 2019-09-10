@@ -10,6 +10,8 @@ GameEngine.init({ gameUI });
 GameEngine.start();
 
 gameUI.btnPause.addEventListener('click', () => {
+  if (GameEngine.isGameOver()) return;
+
   const isPaused = GameEngine.pause();
   gameUI.btnPause.textContent = isPaused ? 'Pause' : 'Unpause';
 });

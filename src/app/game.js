@@ -6,6 +6,12 @@ import { Bullet, TYPE_BULLET_HERO, TYPE_BULLET_ENEMY } from './bullet';
 import { getRandomNumber } from './utils';
 
 const EVENT_TYPE_ADD_ENEMY = 1;
+const EVENT_TYPE_GAME_OVER = 50;
+
+const GAME_STATE_INIT = 10;
+const GAME_STATE_START = 20;
+const GAME_STATE_PAUSED = 30;
+const GAME_STATE_GAME_OVER = 40;
 
 export const GameEngine = {
   init(props = {}) {
@@ -26,6 +32,8 @@ export const GameEngine = {
 
     this.gameUI = props.gameUI;
 
+    this._gameState = GAME_STATE_INIT;
+
     this.gameloop = GameLoop({
       update: () => this.update(),
       render: () => this.render(),
@@ -34,17 +42,24 @@ export const GameEngine = {
 
   start() {
     this.gameloop.start();
+    this._gameState = GAME_STATE_START;
   },
 
   pause() {
     const isStopped = this.gameloop.isStopped;
     if (isStopped) {
       this.gameloop.start();
+      this._gameState = GAME_STATE_START;
     } else {
       this.gameloop.stop();
+      this._gameState = GAME_STATE_PAUSED;
     }
 
     return isStopped;
+  },
+
+  isGameOver() {
+    return this._gameState === GAME_STATE_GAME_OVER;
   },
 
   update() {
@@ -95,6 +110,12 @@ export const GameEngine = {
     // process event
     const event = eventQueue.shift();
     switch (event.type) {
+      case EVENT_TYPE_GAME_OVER:
+        // TODO: handle game over event properly, display label
+        this._gameState = GAME_STATE_GAME_OVER;
+        this.gameloop.stop();
+        break;
+
       case EVENT_TYPE_ADD_ENEMY:
       default:
         this.generateEnemies();
@@ -166,7 +187,7 @@ export const GameEngine = {
 
       if (item.type === TYPE_ENEMY_SIMPLE) {
         if (item.collidesWith(bullet)) {
-          // remove both item
+          // remove both
           item.kill();
           bullet.kill();
 
@@ -187,9 +208,11 @@ export const GameEngine = {
       hero.getHit(item);
 
       if (hero.hp <= 0) {
-        console.log('GAME OVER');
-
-        // TODO: create event for game over
+        // game over with high priority
+        this.eventQueue.unshift({
+          type: EVENT_TYPE_GAME_OVER,
+          delay: 30
+        });
       }
     }
   },

@@ -1,8 +1,15 @@
-const { random, floor } = Math;
+const { random, round } = Math;
 const DOMURL = window.URL || window.webkitURL || window;
 
+/**
+ * Get random number between min & max (min & max are included).
+ *
+ * @param {number} min
+ * @param {number} max
+ * @returns {number}
+ */
 export function getRandomNumber(min, max) {
-  return min + floor(random() * max);
+  return min + round(random() * (max - min));
 }
 
 export function loadSVG(inlineSvg) {

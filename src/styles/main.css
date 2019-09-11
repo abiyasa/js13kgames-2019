@@ -10,6 +10,7 @@ body {
 
 body {
   background-color: #000;
+  color: #000;
   font-family: 'Courier New', Courier, monospace;
 }
 
@@ -25,16 +26,6 @@ body {
   background-color: white;
 }
 
-.ui-game {
-  display: block;
-  position: relative;
-  top: 10px;
-  height: 40px;
-
-  color: #000;
-  font-weight: bold;
-}
-
 button {
   border-radius: 0;
   background: white;
@@ -43,20 +34,24 @@ button {
   font-size: 20px;
 }
 
-#button-pause {
+.ui {
   position: absolute;
+  top: 10px;
+}
+
+#button-pause {
   right: 20px;
 }
 
 #ui-hero-hp {
-  position: absolute;
   left: 20px;
+  font-weight: bold;
 }
 
 #ui-score {
-  position: absolute;
   left: 50%;
   padding-top: .5em;
+  font-weight: bold;
 }
 
 #panel-game-over {

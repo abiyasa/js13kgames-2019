@@ -10,6 +10,7 @@ body {
 
 body {
   background-color: #000;
+  font-family: 'Courier New', Courier, monospace;
 }
 
 .container-main {
@@ -25,7 +26,6 @@ body {
 }
 
 .ui-game {
-  font-family: 'Courier New', Courier, monospace;
   display: block;
   position: relative;
   top: 10px;
@@ -56,5 +56,28 @@ button {
 #ui-score {
   position: absolute;
   left: 50%;
-  padding-top: 6px;
+  padding-top: .5em;
+}
+
+#panel-game-over {
+  color: #000;
+  font-weight: bold;
+  position: absolute;
+  left: calc((100% - 250px) / 2);
+  top: 100px;
+  display: inline-block;
+
+  width: 250px;
+  text-align: center;
+  border: solid 2px #000;
+  background: white;
+  padding: 2em 1em;
+}
+
+#panel-game-over p {
+  font-size: 1.5em;
+}
+
+.hidden {
+  display: none !important;
 }

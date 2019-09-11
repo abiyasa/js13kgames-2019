@@ -9,10 +9,16 @@
 <body>
   <div class="container-main">
     <canvas id="canvas-main" width="640" height="480"></canvas>
+
     <div class="ui-game">
       <button id="button-pause">Pause</button>
       <span id="ui-hero-hp"></span>
       <span id="ui-score"></span>
+    </div>
+
+    <div id="panel-game-over" class="hidden">
+      <p>Game Over</p>
+      <button id="button-retry">Retry?</button>
     </div>
   </div>
 </body>

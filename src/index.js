@@ -5,6 +5,8 @@ const gameUI = {
   btnPause: document.querySelector('#button-pause'),
   labelHeroHp: document.querySelector('#ui-hero-hp'),
   labelScore: document.querySelector('#ui-score'),
+  panelGameOver: document.querySelector('#panel-game-over'),
+  btnRetry: document.querySelector('#button-retry'),
 };
 
 async function main() {
@@ -18,9 +20,15 @@ async function main() {
     gameUI.btnPause.textContent = isPaused ? 'Pause' : 'Unpause';
   });
 
+  gameUI.btnRetry.addEventListener('click', () => {
+    // restart the game
+    window.location.reload();
+  });
+
   document.addEventListener('gameOver', () => {
-    // TODO display game over
-    console.log('GAME OVER');
+    // display game over
+    gameUI.btnPause.setAttribute('disabled', true);
+    gameUI.panelGameOver.className = '';
   });
 }
 

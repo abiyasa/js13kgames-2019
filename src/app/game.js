@@ -133,7 +133,7 @@ export const GameEngine = {
 
       case EVENT_TYPE_ADD_ENEMY:
       default:
-        this.generateEnemies();
+        this.generateEnemy();
     }
   },
 
@@ -146,7 +146,7 @@ export const GameEngine = {
       const numToGenerate = 8 - totalEnemiesCount;
 
       for (let _ = 0; _ < numToGenerate; _++) {
-        console.log(`adding ${numToGenerate} enemies`);
+        // console.log(`adding ${numToGenerate} enemies`);
 
         this.eventQueue.push({
           type: EVENT_TYPE_ADD_ENEMY,
@@ -156,12 +156,16 @@ export const GameEngine = {
     }
   },
 
-  generateEnemies() {
-    // TODO: check level & generate behaviour
+  generateEnemy() {
+    const gameLevel = Math.floor(this._gameScore / 100);
+    const behaviour = getRandomNumber(0, gameLevel);
+
+    // console.log(`lvl ${gameLevel} generateEnemy bhvr=${behaviour}`);
+
     this.poolEnemies.get({
       hero: this.hero,
       poolBullets: this.poolBullets,
-      behaviour: 0
+      behaviour
     });
   },
 

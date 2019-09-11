@@ -43,6 +43,7 @@ export class Enemy extends Base {
 
     switch (behaviour) {
       case 0:
+      default:
         if (posY + sprite.radius > canvas.height + 100) {
           this.kill();
         }
@@ -54,9 +55,6 @@ export class Enemy extends Base {
           sprite.shootDelay--;
         }
         break;
-
-      default:
-        break;
     }
 
     super.update(dt);
@@ -67,7 +65,7 @@ export class Enemy extends Base {
 
     // calculate bullet shooting direction
     const { x: fromX, y: fromY } = this.sprite;
-    console.log(`firing from (${fromX},${fromY}) to (${toX},${toY})`);
+    // console.log(`firing from (${fromX},${fromY}) to (${toX},${toY})`);
     const displacement = { x: toX - fromX, y: toY - fromY };
     const distance = Math.sqrt((displacement.x ** 2) + (displacement.y ** 2));
 

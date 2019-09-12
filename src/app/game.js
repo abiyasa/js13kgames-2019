@@ -5,6 +5,7 @@ import { Enemy, TYPE_ENEMY_SIMPLE } from './enemy';
 import { Bullet, TYPE_BULLET_HERO, TYPE_BULLET_ENEMY } from './bullet';
 import { getRandomNumber, loadSVG } from './utils';
 import assetHero from './hero.svg';
+import assetShadow from './shadow.svg';
 import assetLeg01 from './leg01.svg';
 import assetLeg02 from './leg02.svg';
 
@@ -18,11 +19,13 @@ const GAME_STATE_GAME_OVER = 40;
 
 async function initAssets() {
   const hero = await loadSVG(assetHero);
+  const shadow = await loadSVG(assetShadow);
   const leg01 = await loadSVG(assetLeg01);
   const leg02 = await loadSVG(assetLeg02);
 
   return {
     hero,
+    shadow,
     leg01,
     leg02,
   };

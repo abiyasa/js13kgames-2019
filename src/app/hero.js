@@ -98,7 +98,9 @@ function generateImage(assets, width, height) {
 
   const ctx = canvas.getContext('2d');
 
+  ctx.drawImage(assets.shadow, 0, 0);
   ctx.drawImage(assets.leg01, 0, 0);
+  // ctx.drawImage(assets.leg02, 0, 0);
   ctx.drawImage(assets.hero, 0, 0);
 
   return canvas;

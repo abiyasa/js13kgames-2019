@@ -30,16 +30,3 @@ export function loadSVG(inlineSvg) {
     image.src = url;
   });
 }
-
-export async function createCanvasFromSVG(inlineSvg, width, height) {
-  const svgImage = await loadSVG(inlineSvg);
-
-  const canvas = document.createElement('canvas');
-  canvas.width = width;
-  canvas.height = height;
-
-  const ctx = canvas.getContext('2d');
-  ctx.drawImage(svgImage, 0, 0);
-
-  return canvas;
-}

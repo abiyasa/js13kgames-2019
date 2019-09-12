@@ -5,26 +5,29 @@ export const TYPE_HERO = 101;
 
 export class Hero extends Base {
   init(props = {}) {
-    this.hp = props.hp;
+    const { hp, assets, ...restProps } = props;
+    this.hp = hp;
 
     this._invisible = false;
     this._isGetHit = false;
     this._getHitFrame = 0;
 
+    const image = generateImage(assets, 50, 40);
+
     const baseCfg = {
       type: TYPE_HERO,
-      color: '#67e6e5',
-      width: 20,
+      image,
+      width: 50,
       height: 40,
       speed: 3,
-      radius: 10,
+      radius: 25,
     }
 
     super.init({
       x: 100,
       y: 80,
       ...baseCfg,
-      ...props
+      ...restProps
     });
   }
 
@@ -86,4 +89,17 @@ export class Hero extends Base {
 
     super.render();
   }
+}
+
+function generateImage(assets, width, height) {
+  const canvas = document.createElement('canvas');
+  canvas.width = width;
+  canvas.height = height;
+
+  const ctx = canvas.getContext('2d');
+
+  ctx.drawImage(assets.leg01, 0, 0);
+  ctx.drawImage(assets.hero, 0, 0);
+
+  return canvas;
 }

@@ -8,7 +8,8 @@ export const TYPE_ENEMY_SIMPLE = 200;
 // - 0: straight from top to bottom, no fire
 // - 1: movement like 0, fire towards hero once randomly
 // - 2: from top to bottom with a little bit diagonal with fire
-// - movement like 0, fire towards hero twice randomly
+// - 3: movement like 0, fire towards hero 2 or 3 times randomly
+// - lock & targeted towards hero with higher speed. Shoot once
 // - straight from top and then stop within distance (to fire)
 // - straight from top and then stop within distance (to fire) for a delay, and then continue
 
@@ -95,6 +96,15 @@ function getInitialCfg(behaviour) {
   }
 
   switch (behaviour) {
+    case 3:
+      return {
+        color: randColor,
+        shootDelays: [getRandomNumber(10, 30), getRandomNumber(30, 50)],
+        x: getRandomNumber(160, 480),
+        y: -20,
+        dy: getRandomNumber(1, 4),
+      };
+
     case 2:
       return {
         color: randColor,

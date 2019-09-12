@@ -5,8 +5,10 @@ import { getRandomNumber } from './utils';
 export const TYPE_ENEMY_SIMPLE = 200;
 
 // enemy behaviour
-// - 0: straight from top to bottom, fire towards hero once randomly
-// - chase slowly towards player
+// - 0: straight from top to bottom, no fire
+// - 1: movement like 0, fire towards hero once randomly
+// - 2: from top to bottom with a little bit diagonal with fire
+// - movement like 0, fire towards hero twice randomly
 // - straight from top and then stop within distance (to fire)
 // - straight from top and then stop within distance (to fire) for a delay, and then continue
 
@@ -37,24 +39,27 @@ export class Enemy extends Base {
   }
 
   update(dt) {
-    const { sprite, behaviour } = this;
+    const { sprite } = this;
+    const { shootDelays } = sprite;
     const canvas = sprite.context.canvas;
     const posY = sprite.y;
+    const posX = sprite.x;
 
-    switch (behaviour) {
-      case 0:
-      default:
-        if (posY + sprite.radius > canvas.height + 100) {
-          this.kill();
-        }
+    if ((posY + sprite.radius > canvas.height + 100) ||
+      (posX < -100) || (posX + sprite.radius > canvas.width + 100)
+    ) {
+      this.kill();
+    }
 
-        if (sprite.shootDelay <= 0) {
-          this.fire(sprite.poolBullets, sprite.hero.x, sprite.hero.y, 2);
-          sprite.shootDelay = Infinity; // shoot only once
-        } else {
-          sprite.shootDelay--;
-        }
-        break;
+    if (shootDelays[0] !== undefined) {
+      if (shootDelays[0] <= 0) {
+        this.fire(sprite.poolBullets, sprite.hero.x, sprite.hero.y, 2);
+
+        // next shoot
+        shootDelays.shift();
+      } else {
+        shootDelays[0]--;
+      }
     }
 
     super.update(dt);
@@ -83,24 +88,40 @@ export class Enemy extends Base {
 }
 
 function getInitialCfg(behaviour) {
-  const randColor = getRandomNumber(0, 255).toString(16);
+  const randColor = `#${getRandomNumber(0, 255).toString(16)}8080`;
+
+  if (behaviour > 2) {
+    behaviour = 1 + Math.floor(Math.random() * 2);
+  }
 
   switch (behaviour) {
-    case 0:
+    case 2:
       return {
-        color: `#${randColor}8080`,
-        shootDelay: getRandomNumber(30, 50),
+        color: randColor,
+        shootDelays: [getRandomNumber(30, 50)],
+        x: getRandomNumber(160, 480),
+        y: -10,
+        dx: getRandomNumber(1, 4),
+        dy: getRandomNumber(2, 4),
+      };
+
+    case 1:
+      return {
+        color: randColor,
+        shootDelays: [getRandomNumber(30, 50)],
         x: getRandomNumber(160, 480),
         y: -20,
         dy: getRandomNumber(1, 4),
       };
 
+    case 0:
     default:
       return {
-        color: `#${randColor}8080`,
+        color: randColor,
+        shootDelays: [],
         x: getRandomNumber(160, 480),
-        y: getRandomNumber(20, 220),
-        dx: getRandomNumber(1, 4),
+        y: -20,
+        dy: getRandomNumber(1, 4),
       };
   };
 }

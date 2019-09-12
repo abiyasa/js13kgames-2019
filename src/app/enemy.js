@@ -10,6 +10,7 @@ export const TYPE_ENEMY_SIMPLE = 200;
 // - 2: from top to bottom with a little bit diagonal with fire
 // - 3: movement like 0, fire towards hero 2 or 3 times randomly
 // - lock & targeted towards hero with higher speed. Shoot once
+
 // - straight from top and then stop within distance (to fire)
 // - straight from top and then stop within distance (to fire) for a delay, and then continue
 
@@ -99,7 +100,7 @@ function getInitialCfg(behaviour) {
     case 3:
       return {
         color: randColor,
-        shootDelays: [getRandomNumber(10, 30), getRandomNumber(30, 50)],
+        shootDelays: [getRandomNumber(10, 30), getRandomNumber(10, 30)],
         x: getRandomNumber(160, 480),
         y: -20,
         dy: getRandomNumber(1, 4),

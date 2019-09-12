@@ -1,4 +1,4 @@
-import { keyPressed } from 'kontra';
+import { keyPressed, SpriteSheet } from 'kontra';
 import { Base} from './base';
 
 export const TYPE_HERO = 101;
@@ -12,11 +12,9 @@ export class Hero extends Base {
     this._isGetHit = false;
     this._getHitFrame = 0;
 
-    const image = generateImage(assets, 50, 40);
-
     const baseCfg = {
       type: TYPE_HERO,
-      image,
+      animations: generateAnimations(assets, 50, 40).animations,
       width: 50,
       height: 40,
       speed: 3,
@@ -91,17 +89,30 @@ export class Hero extends Base {
   }
 }
 
-function generateImage(assets, width, height) {
+function generateAnimations(assets, width, height) {
   const canvas = document.createElement('canvas');
-  canvas.width = width;
+  canvas.width = width * 2;
   canvas.height = height;
 
   const ctx = canvas.getContext('2d');
 
   ctx.drawImage(assets.shadow, 0, 0);
-  ctx.drawImage(assets.leg01, 0, 0);
-  // ctx.drawImage(assets.leg02, 0, 0);
-  ctx.drawImage(assets.hero, 0, 0);
+  ctx.drawImage(assets.leg01, 0, -2);
+  ctx.drawImage(assets.hero, 0, -2);
 
-  return canvas;
+  ctx.drawImage(assets.shadow, width, 0);
+  ctx.drawImage(assets.leg02, width, 0);
+  ctx.drawImage(assets.hero, width, 0);
+
+  return SpriteSheet({
+    image: canvas,
+    frameWidth: width,
+    frameHeight: height,
+    animations: {
+      run: {
+        frames: '0..1',
+        frameRate: 5
+      }
+    }
+  });
 }

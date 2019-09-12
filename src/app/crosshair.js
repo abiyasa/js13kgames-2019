@@ -83,7 +83,7 @@ export class CrossHair extends Base {
       y: fromY,
       dx: displacement.x / distance * 10,
       dy: displacement.y / distance * 10,
-      color: 'cyan',
+      color: '#83D1C9',
       ttl: 60
     });
   }

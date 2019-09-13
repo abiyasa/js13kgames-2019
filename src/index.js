@@ -1,6 +1,13 @@
 import { GameEngine } from './app/game';
 import './styles/main.css'
 
+document.querySelector('#button-start').addEventListener('click', () => {
+  document.querySelector('#screen-intro').classList.add('hidden');
+  document.querySelector('#screen-game').classList.remove('hidden');
+
+  startGame();
+});
+
 const gameUI = {
   btnPause: document.querySelector('#button-pause'),
   labelHeroHp: document.querySelector('#ui-hero-hp'),
@@ -9,7 +16,7 @@ const gameUI = {
   btnRetry: document.querySelector('#button-retry'),
 };
 
-async function main() {
+async function startGame() {
   await GameEngine.init({ gameUI });
   GameEngine.start();
 
@@ -31,5 +38,3 @@ async function main() {
     gameUI.panelGameOver.className = '';
   });
 }
-
-main();

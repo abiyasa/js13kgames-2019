@@ -77,3 +77,33 @@ button {
 .hidden {
   display: none !important;
 }
+
+#screen-intro {
+  background-color: white;
+}
+
+#screen-intro .filler {
+  width: 640px;
+  height: 100vh;
+}
+
+#screen-intro h1 {
+  font-size: 2em;
+  line-height: 1;
+  margin: 0;
+  position: absolute;
+  text-align: right;
+  width: 200px;
+  bottom: 240px;
+  right: 20px;
+}
+
+#screen-intro h1 > span {
+  font-size: 1.7em;
+}
+
+#button-start {
+  position: absolute;
+  bottom: 190px;
+  right: 20px;
+}

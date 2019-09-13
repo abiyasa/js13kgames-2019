@@ -26,6 +26,9 @@ export function loadSVG(inlineSvg) {
 
       resolve(image);
     }
+    image.onerror = (err) => {
+      console.error(err);
+    }
 
     image.src = url;
   });
